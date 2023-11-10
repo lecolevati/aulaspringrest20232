@@ -24,52 +24,7 @@ import jakarta.validation.Valid;
 @RequestMapping("/api")
 public class DeptoController implements ICRUDController<DeptoDTO> {
 
-	@Autowired
-	DeptoRepository dRep;
-
-	@Override
-	@GetMapping("/depto")
-	public List<DeptoDTO> lista() {
-		List<Depto> listaDepto = dRep.findAll();
-		List<DeptoDTO> listaDeptoDTO = converteListaDeptoListaDeptoDTO(listaDepto);
-		return listaDeptoDTO;
-	}
-
-	@Override
-	@GetMapping("/depto/{codigoDepto}")
-	public ResponseEntity<DeptoDTO> busca(@PathVariable(value = "codigoDepto") int cod) {
-		Depto depto = dRep.findById(cod).orElseThrow(() -> new ResourceNotFoundException("Código inválido"));
-		DeptoDTO deptoDTO = converteDeptoDpetoDTO(depto);
-		return ResponseEntity.ok().body(deptoDTO);
-	}
-
-	@Override
-	@PostMapping("/depto")
-	public ResponseEntity<String> adiciona(@Valid @RequestBody DeptoDTO deptoDTO) {
-		Depto depto = converteDeptoDTODepto(deptoDTO);
-		dRep.save(depto);
-		String saida = "Depto adicionado com sucesso";
-		return ResponseEntity.ok().body(saida);
-	}
-
-	@Override
-	@PutMapping("/depto")
-	public ResponseEntity<String> atualiza(@Valid @RequestBody DeptoDTO deptoDTO) {
-		Depto depto = converteDeptoDTODepto(deptoDTO);
-		dRep.save(depto);
-		String saida = "Depto atualizado com sucesso";
-		return ResponseEntity.ok().body(saida);
-	}
-
-	@Override
-	@DeleteMapping("/depto")
-	public ResponseEntity<String> exclui(@Valid @RequestBody DeptoDTO deptoDTO) {
-		Depto depto = converteDeptoDTODepto(deptoDTO);
-		dRep.delete(depto);
-		String saida = "Depto excluido com sucesso";
-		return ResponseEntity.ok().body(saida);
-	}
-
+	
 	private List<DeptoDTO> converteListaDeptoListaDeptoDTO(List<Depto> listaDepto) {
 		List<DeptoDTO> listaDeptoDTO = new ArrayList<>();
 		for (Depto depto : listaDepto) {
