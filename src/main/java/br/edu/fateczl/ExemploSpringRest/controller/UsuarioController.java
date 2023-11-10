@@ -26,52 +26,7 @@ import jakarta.validation.Valid;
 @RequestMapping("/api")
 public class UsuarioController implements ICRUDController<UsuarioDTO> {
 
-	@Autowired
-	UsuarioRepository uRep;
-	
 
-	@Override
-	@GetMapping("/usuario")
-	public List<UsuarioDTO> lista() {
-		List<Usuario> lista = uRep.findAll();
-		List<UsuarioDTO> listaDTO = converteListaUsuarioListaUsuarioDTO(lista);
-		return listaDTO;
-	}
-	
-	@Override
-	@GetMapping("/usuario/{usuarioId}")
-	public ResponseEntity<UsuarioDTO> busca(@PathVariable(name = "usuarioId") int usuarioId) {
-		Usuario usuario = uRep.findById(usuarioId).orElseThrow(() -> new ResourceNotFoundException("ID invalido"));
-		UsuarioDTO usuarioDTO = converteUsuarioUsuarioDTO(usuario);
-		return ResponseEntity.ok().body(usuarioDTO);
-	}
-
-	@Override
-	@PostMapping("/usuario")
-	public ResponseEntity<String> adiciona(@Valid @RequestBody UsuarioDTO usuarioDTO) {
-		Usuario usuario = converteUsuarioDTOUsuario(usuarioDTO);
-		uRep.save(usuario);
-		String saida = "Usuario adicionado com sucesso";
-		return ResponseEntity.ok().body(saida);
-	}
-
-	@Override
-	@PutMapping("/usuario")
-	public ResponseEntity<String> atualiza(@Valid @RequestBody UsuarioDTO usuarioDTO) {
-		Usuario usuario = converteUsuarioDTOUsuario(usuarioDTO);
-		uRep.save(usuario);
-		String saida = "Usuario atualizado com sucesso";
-		return ResponseEntity.ok().body(saida);
-	}
-
-	@Override
-	@DeleteMapping("/usuario")
-	public ResponseEntity<String> exclui(@Valid @RequestBody UsuarioDTO usuarioDTO) {
-		Usuario usuario = converteUsuarioDTOUsuario(usuarioDTO);
-		uRep.delete(usuario);
-		String saida = "Usuario excluido com sucesso";
-		return ResponseEntity.ok().body(saida);
-	}
 	
 	private List<UsuarioDTO> converteListaUsuarioListaUsuarioDTO(List<Usuario> listaUsuario) {
 		List<UsuarioDTO> listaUsuarioDTO = new ArrayList<>();
